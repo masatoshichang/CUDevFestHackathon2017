@@ -28,6 +28,10 @@ def get_emotion(json_data):
     payload = json.dumps(json_data)
 
     r = requests.post(EMOTION_API_URL, headers=headers, data=payload)
+    print(r.json())
+    if type(r.json()) is dict and 'message' in r.json().key():
+        print(r.json())
+
     return r.json()
 
 

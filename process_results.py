@@ -13,10 +13,9 @@ if __name__ == '__main__':
     emotions_list = ['sadness', 'neutral', 'contempt', 'disgust', 'anger', 'surprise', 'fear', 'happiness']
     averages = {}
     for e in emotions_list:
-        averages[e] = 0
+        averages[e] = defaultdict(int)
 
-    section_names = defaultdict(int)
-
+    section_count = defaultdict(int)
 
     for a_result in results_list:
         if len(a_result.emotion_result) == 0:
@@ -53,7 +52,7 @@ if __name__ == '__main__':
             happiness = emotion['happiness']
 
             for e in emotions_list:
-                averages[e] += emotion[e]
+                averages[e][section] += emotion[e]
 
             """
             title, date, section, subsection, news_desk, img_url, face_rectangle, sadness, neutral, contempt, disgust, anger, surprise, fear, happiness
@@ -63,17 +62,22 @@ if __name__ == '__main__':
             #input_values = [title, date, section, subsection, news_desk, emotion]
             #print(input_values)
             num_faces += 1
-            section_names[section] += 1
+            section_count[section] += 1
 
             #insert_sql_database(input_values)
         num += 1
         print(num)
 
-    for e in emotions_list:
-        averages[e] = averages[e]/num_faces
-    print(averages)
+    for sec in section_count.keys():
+        print sec
+        print section_count[sec]
+        for e in emotions_list:
+            averages[e][sec] = averages[e][sec]/section_count[sec]
+            print e + ': ' + str(averages[e][sec])
+        print '\n'
+    
+
     print('num: {}'.format(num)) 
     print('num_faces: {}'.format(num_faces))
-    print(section_names)
 
         
