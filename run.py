@@ -9,7 +9,11 @@ from results import *
 if __name__ == '__main__':
     payload = {}
 
-    for m in range(2, 13):
+
+    result_list = []
+    result_list = read_from_pickle('result_pickle2.pkl')
+
+    for m in range(3, 13):
         search_range = '2016/{}'.format(m)
         print('-' * 50)
         print('Search range')
@@ -17,7 +21,6 @@ if __name__ == '__main__':
         archive_list = get_archive(payload, search_range)
         print(archive_list)
 
-        result_list = []
 
         num_articles = len(archive_list)
         
@@ -36,6 +39,7 @@ if __name__ == '__main__':
             if i % 50 == 0:
                 save_to_pickle(result_list)
 
+        save_to_pickle(result_list)
 
         
     save_to_pickle(result_list)

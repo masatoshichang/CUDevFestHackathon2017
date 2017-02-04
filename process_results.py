@@ -71,9 +71,9 @@ if __name__ == '__main__':
 
     for e in emotions_list:
         averages[e] = averages[e]/num_faces
-    print averages
+    print(averages)
     print('num: {}'.format(num)) 
     print('num_faces: {}'.format(num_faces))
-    print section_names
+    print(section_names)
 
         
