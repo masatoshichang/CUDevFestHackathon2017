@@ -52,7 +52,7 @@ class ArticleResponseList(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         if self.current >= len(self.list_articles):
             raise StopIteration
         else:

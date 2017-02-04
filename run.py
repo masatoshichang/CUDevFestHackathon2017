@@ -8,28 +8,34 @@ from results import *
 
 if __name__ == '__main__':
     payload = {}
-    search_range = '2016/1'
-    archive_list = get_archive(payload, search_range)
 
-    result_list = []
+    for m in range(2, 13):
+        search_range = '2016/{}'.format(m)
+        print('-' * 50)
+        print('Search range')
+        print(search_range)
+        archive_list = get_archive(payload, search_range)
+        print(archive_list)
 
-    num_articles = len(archive_list)
-    
-    i = 0
-    for an_article in archive_list:
-        i += 1
-        print('{}/{}'.format(i, num_articles))
-        image_url = an_article.image_url
-        emotion_json = get_emotion(image_url)
+        result_list = []
 
-        face_json = get_face(image_url)
+        num_articles = len(archive_list)
+        
+        i = 0
+        for an_article in archive_list:
+            i += 1
+            print('{}/{}'.format(i, num_articles))
+            image_url = an_article.image_url
+            emotion_json = get_emotion(image_url)
 
-        result = Result(an_article, emotion_json, face_json)
-        result_list.append(result)
+            # face_json = get_face(image_url)
+
+            result = Result(an_article, emotion_json)
+            result_list.append(result)
+
+            if i % 50 == 0:
+                save_to_pickle(result_list)
 
 
-        time.sleep(1)
-
-
-    
+        
     save_to_pickle(result_list)

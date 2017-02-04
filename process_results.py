@@ -1,6 +1,6 @@
 from article_search import *
 from results import *
-
+from collections import defaultdict
 
 
 
@@ -9,6 +9,14 @@ if __name__ == '__main__':
     
     num = 0
     num_faces = 0
+
+    emotions_list = ['sadness', 'neutral', 'contempt', 'disgust', 'anger', 'surprise', 'fear', 'happiness']
+    averages = {}
+    for e in emotions_list:
+        averages[e] = defaultdict(int)
+
+    section_count = defaultdict(int)
+
     for a_result in results_list:
         if len(a_result.emotion_result) == 0:
             # No faces?
@@ -43,17 +51,31 @@ if __name__ == '__main__':
             fear = emotion['fear']
             happiness = emotion['happiness']
 
+            for e in emotions_list:
+                averages[e][section] += emotion[e]
+
             """
             title, date, section, subsection, news_desk, img_url, face_rectangle, sadness, neutral, contempt, disgust, anger, surprise, fear, happiness
             """
 
-            input_values = [title, date, section, subsection, news_desk, img_url, face_rectangle, sadness, neutral, contempt, disgust, anger, surprise, fear, happiness]
-            print(input_values)
+            #input_values = [title, date, section, subsection, news_desk, img_url, face_rectangle, sadness, neutral, contempt, disgust, anger, surprise, fear, happiness]
+            #input_values = [title, date, section, subsection, news_desk, emotion]
+            #print(input_values)
             num_faces += 1
+            section_count[section] += 1
 
-            insert_sql_database(input_values)
+            #insert_sql_database(input_values)
         num += 1
         print(num)
+
+    for sec in section_count.keys():
+        print sec
+        print section_count[sec]
+        for e in emotions_list:
+            averages[e][sec] = averages[e][sec]/section_count[sec]
+            print e + ': ' + str(averages[e][sec])
+        print '\n'
+    
 
     print('num: {}'.format(num)) 
     print('num_faces: {}'.format(num_faces))
