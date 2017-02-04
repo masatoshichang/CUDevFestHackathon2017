@@ -16,16 +16,16 @@ class ArticleData(object):
 
         # Get the biggest image from list
         height = 0
-        self.biggest_image_url = ''
+        self.image_url = ''
         for img in self.raw_json['multimedia']:
             if img['height'] > height:
                 height = img['height']
-                self.biggest_image_url = img['url']
+                self.image_url = img['url']
 
-        if self.biggest_image_url == '':
+        if self.image_url == '':
             raise Exception('Image not found')
 
-        self.biggest_image_url = 'https://www.nytimes.com/' + self.biggest_image_url
+        self.image_url = 'https://www.nytimes.com/' + self.image_url
 
 
 class ArticleResponseList(object):
@@ -58,7 +58,8 @@ def get_archive(json_data, search_range):
     json_data['api-key'] = NY_TIMES_API_KEY
     url = NY_TIMES_ARCHIVE_API + search_range + '.json'
     r = requests.get(url, params=json_data)
-    return r.json()
+    # return r.json()
+    return ArticleResponseList(r.json())
 
 
 if __name__ == '__main__':
