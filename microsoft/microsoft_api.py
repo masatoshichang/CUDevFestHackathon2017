@@ -1,8 +1,8 @@
 import requests
 import urllib
-from urlparse import urlparse
-import urlparse
 import json
+import urllib.parse
+
 
 EMOTION_API_URL = 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize'
 EMOTION_API_KEY = '186c5e37fa44403286396f8f9907b709'
@@ -47,7 +47,7 @@ def get_face(json_data):
 
     payload = json.dumps(json_data)
 
-    params = urllib.urlencode({
+    params = urllib.parse.urlencode({
         'returnFaceId': 'true',
         'returnFaceLandmarks': 'true',
         'returnFaceAttributes': 'age,gender,smile,facialHair,glasses,headPose',
