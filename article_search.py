@@ -35,6 +35,8 @@ class ArticleResponseList(object):
     """
 
     def __init__(self, json_response):
+        self.current = 0
+
         self.raw_json = json_response
         self.list_articles = []
         for n in self.raw_json['response']['docs']:
@@ -45,6 +47,16 @@ class ArticleResponseList(object):
 
     def __getitem__(self, index):
         return self.list_articles[index]
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.current >= len(self.list_articles):
+            raise StopIteration
+        else:
+            self.current += 1
+            return self.list_articles[self.current - 1]
 
 
 
@@ -70,15 +82,14 @@ if __name__ == '__main__':
             }
 
     t = get_articles(payload)
-    print(t[0].biggest_image_url)
-    print(t[1].biggest_image_url)
-    print(t[2].biggest_image_url)
-    print(t[3].biggest_image_url)
-    print(t[4].biggest_image_url)
+
+    for i in t:
+        print(i.image_url)
 
     search_range = '2016/1'
     t = get_archive(payload, search_range)
-    response = t['response']
-    docs = response['docs']
-    print len(docs)
+
+    for i in t:
+        print(i.image_url)
+
 
