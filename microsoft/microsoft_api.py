@@ -23,6 +23,8 @@ def get_emotion(json_data):
         'Ocp-Apim-Subscription-Key': EMOTION_API_KEY,
     }
 
+    json_data = {'url': json_data}
+
     payload = json.dumps(json_data)
 
     r = requests.post(EMOTION_API_URL, headers=headers, data=payload)
@@ -41,6 +43,8 @@ def get_face(json_data):
         'Ocp-Apim-Subscription-Key': FACE_API_KEY,
     }
 
+    json_data = {'url': json_data}
+
     payload = json.dumps(json_data)
 
     params = urllib.urlencode({
@@ -55,7 +59,7 @@ def get_face(json_data):
 
 if __name__ == '__main__':
     # Example
-    payload = {'url': 'https://lh5.googleusercontent.com/-Sv0q6lkSAGM/AAAAAAAAAAI/AAAAAAAAAZM/nLrSzTXJz0I/s0-c-k-no-ns/photo.jpg'}
+    payload = 'https://lh5.googleusercontent.com/-Sv0q6lkSAGM/AAAAAAAAAAI/AAAAAAAAAZM/nLrSzTXJz0I/s0-c-k-no-ns/photo.jpg'
 
     t = get_emotion(payload)
     print(t)
@@ -64,7 +68,7 @@ if __name__ == '__main__':
     print(t)
 
     # No face
-    payload = {'url': 'https://lh3.googleusercontent.com/-4LORSEgp28U/AAAAAAAAAAI/AAAAAAAAErY/W4Ug6i3Vc64/s0-c-k-no-ns/photo.jpg'}
+    payload = 'https://lh3.googleusercontent.com/-4LORSEgp28U/AAAAAAAAAAI/AAAAAAAAErY/W4Ug6i3Vc64/s0-c-k-no-ns/photo.jpg'
     t = get_emotion(payload)
     print(t)
 
