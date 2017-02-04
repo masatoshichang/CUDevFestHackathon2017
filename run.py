@@ -11,7 +11,11 @@ if __name__ == '__main__':
 
     for m in range(2, 13):
         search_range = '2016/{}'.format(m)
+        print('-' * 50)
+        print('Search range')
+        print(search_range)
         archive_list = get_archive(payload, search_range)
+        print(archive_list)
 
         result_list = []
 
@@ -24,9 +28,9 @@ if __name__ == '__main__':
             image_url = an_article.image_url
             emotion_json = get_emotion(image_url)
 
-            face_json = get_face(image_url)
+            # face_json = get_face(image_url)
 
-            result = Result(an_article, emotion_json, face_json)
+            result = Result(an_article, emotion_json)
             result_list.append(result)
 
 
