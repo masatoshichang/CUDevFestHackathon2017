@@ -69,12 +69,12 @@ if __name__ == '__main__':
         print(num)
 
     for sec in section_count.keys():
-        print sec
-        print section_count[sec]
+        print(sec)
+        print(section_count[sec])
         for e in emotions_list:
             averages[e][sec] = averages[e][sec]/section_count[sec]
-            print e + ': ' + str(averages[e][sec])
-        print '\n'
+            print(e + ': ' + str(averages[e][sec]))
+        print('\n')
     
 
     print('num: {}'.format(num)) 
