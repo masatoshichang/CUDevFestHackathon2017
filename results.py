@@ -14,3 +14,10 @@ def save_to_pickle(result_list):
 
     print('Saved to pickle')
 
+
+def read_from_pickle(file_name='result_pickle.pkl'):
+    with open(file_name, 'rb') as fp:
+        result_list = pickle.load(fp)
+
+    return result_list
+
