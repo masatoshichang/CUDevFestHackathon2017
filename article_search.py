@@ -77,7 +77,8 @@ def get_archive(json_data, search_range):
     # return r.json()
     return ArticleResponseList(r.json())
 
-def insert_sql_database():
+
+def insert_sql_database(input_values):
     connection = pypyodbc.connect('Driver={ODBC Driver 13 for SQL Server};'
                                   'Server=tcp:cudevfest2017.database.windows.net,1433;'
                                   'Database=cudevfest2017;'
@@ -93,7 +94,7 @@ def insert_sql_database():
                   "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 
     Values = [1, "test", "test", "test", "test", "test", "test", 0, 0, 0, 0, 0, 0, 0, 0]
-    cursor.execute(SQLCommand, Values)
+    cursor.execute(SQLCommand, input_values)
 
     #Commit the change
     connection.commit()
