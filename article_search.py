@@ -90,10 +90,10 @@ def insert_sql_database(input_values):
 
     cursor = connection.cursor()
     SQLCommand = ("INSERT INTO dbo.EmotionSection "
-                  "(id, title, section, subsection, news_desk, img_url, face_rectangle, sadness, neutral, contempt, disgust, anger, surprise, fear, happiness)"
+                  "(title, date, section, subsection, news_desk, img_url, face_rectangle, sadness, neutral, contempt, disgust, anger, surprise, fear, happiness)"
                   "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 
-    Values = [1, "test", "test", "test", "test", "test", "test", 0, 0, 0, 0, 0, 0, 0, 0]
+    # Values = [1, "test", "test", "test", "test", "test", "test", 0, 0, 0, 0, 0, 0, 0, 0]
     cursor.execute(SQLCommand, input_values)
 
     #Commit the change
