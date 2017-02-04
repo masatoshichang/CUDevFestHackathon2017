@@ -58,6 +58,9 @@ class ArticleResponseList(object):
             self.current += 1
             return self.list_articles[self.current - 1]
 
+    def __len__(self):
+        return len(self.list_articles)
+
 
 
 def get_articles(json_data): # only returns 10 articles
