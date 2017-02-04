@@ -17,16 +17,16 @@ class ArticleData(object):
 
         # Get the biggest image from list
         height = 0
-        self.biggest_image_url = ''
+        self.image_url = ''
         for img in self.raw_json['multimedia']:
             if img['height'] > height:
                 height = img['height']
-                self.biggest_image_url = img['url']
+                self.image_url = img['url']
 
-        if self.biggest_image_url == '':
+        if self.image_url == '':
             raise Exception('Image not found')
 
-        self.biggest_image_url = 'https://www.nytimes.com/' + self.biggest_image_url
+        self.image_url = 'https://www.nytimes.com/' + self.image_url
 
 
 class ArticleResponseList(object):
@@ -36,6 +36,8 @@ class ArticleResponseList(object):
     """
 
     def __init__(self, json_response):
+        self.current = 0
+
         self.raw_json = json_response
         self.list_articles = []
         for n in self.raw_json['response']['docs']:
@@ -46,6 +48,19 @@ class ArticleResponseList(object):
 
     def __getitem__(self, index):
         return self.list_articles[index]
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        if self.current >= len(self.list_articles):
+            raise StopIteration
+        else:
+            self.current += 1
+            return self.list_articles[self.current - 1]
+
+    def __len__(self):
+        return len(self.list_articles)
 
 
 
@@ -59,7 +74,8 @@ def get_archive(json_data, search_range):
     json_data['api-key'] = NY_TIMES_API_KEY
     url = NY_TIMES_ARCHIVE_API + search_range + '.json'
     r = requests.get(url, params=json_data)
-    return r.json()
+    # return r.json()
+    return ArticleResponseList(r.json())
 
 def insert_sql_database():
     connection = pypyodbc.connect('Driver={ODBC Driver 13 for SQL Server};'
@@ -86,4 +102,21 @@ def insert_sql_database():
 
 
 if __name__ == '__main__':
-    insert_sql_database()
+    payload = {
+    'fq': "section_name:(\"Technology\")",
+    'begin_date': "20160101",
+    'end_date': "20160131"
+            }
+
+    t = get_articles(payload)
+
+    for i in t:
+        print(i.image_url)
+
+    search_range = '2016/1'
+    t = get_archive(payload, search_range)
+
+    for i in t:
+        print(i.image_url)
+
+
