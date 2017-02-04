@@ -7,6 +7,9 @@ NY_TIMES_ARCHIVE_API = 'https://api.nytimes.com/svc/archive/v1/'
 
 
 class ArticleData(object):
+    """
+    Represents each individual article
+    """
 
     def __init__(self, json_data):
         self.raw_json = json_data
@@ -26,6 +29,10 @@ class ArticleData(object):
 
 
 class ArticleResponseList(object):
+    """
+    Holds list of ArticleData
+    Input is the json data from HTTP requests
+    """
 
     def __init__(self, json_response):
         self.raw_json = json_response
@@ -44,7 +51,6 @@ class ArticleResponseList(object):
 def get_articles(json_data): # only returns 10 articles
     json_data['api-key'] = NY_TIMES_API_KEY
     r = requests.get(NY_TIMES_ARTICLE_API, params=json_data)
-    #return r.json()
     return ArticleResponseList(r.json())
 
 
