@@ -5,10 +5,10 @@ import urlparse
 import json
 
 EMOTION_API_URL = 'https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize'
-EMOTION_API_KEY = 'e51cfa3722484ea3adc0fb7967c4ad51'
+EMOTION_API_KEY = '186c5e37fa44403286396f8f9907b709'
 
 FACE_API_URL = 'https://westus.api.cognitive.microsoft.com/face/v1.0/detect'
-FACE_API_KEY = 'f8e991096c734d30ac6806fbc5e1547e'
+FACE_API_KEY = 'dc7ab2e1c4da4414be3d29bb476dcac8'
 
 
 def get_emotion(json_data):
