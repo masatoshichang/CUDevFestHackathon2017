@@ -30,8 +30,5 @@ if __name__ == '__main__':
             result_list.append(result)
 
 
-            time.sleep(1)
-
-
         
     save_to_pickle(result_list)
