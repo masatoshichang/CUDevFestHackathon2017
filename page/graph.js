@@ -5,7 +5,7 @@ var connectionstring="Driver={ODBC Driver 13 for SQL Server};Server=tcp:cudevfes
 connection.Open(connectionstring);
 var rs = new ActiveXObject("ADODB.Recordset");
 
-rs.Open("SELECT * FROM dbo.EmotionSections ORDER BY date ASC", connection);
+rs.Open("SELECT * FROM dbo.EmotionSection ORDER BY date ASC", connection);
 rs.MoveFirst()
 while(!rs.eof)
 {
