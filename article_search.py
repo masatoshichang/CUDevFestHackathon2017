@@ -1,5 +1,6 @@
 import requests
 import pprint
+import pypyodbc
 
 NY_TIMES_ARTICLE_API = 'https://api.nytimes.com/svc/search/v2/articlesearch.json'
 NY_TIMES_API_KEY = '8c6b810edc3a42de829129b0e38eaf99'
@@ -60,24 +61,29 @@ def get_archive(json_data, search_range):
     r = requests.get(url, params=json_data)
     return r.json()
 
+def insert_sql_database():
+    connection = pypyodbc.connect('Driver={ODBC Driver 13 for SQL Server};'
+                                  'Server=tcp:cudevfest2017.database.windows.net,1433;'
+                                  'Database=cudevfest2017;'
+                                  'Uid=devfest@cudevfest2017;'
+                                  'Pwd=!23QweAsdZxc;'
+                                  'Encrypt=yes;'
+                                  'TrustServerCertificate=no;'
+                                  'Connection Timeout=30;')
+
+    cursor = connection.cursor()
+    SQLCommand = ("INSERT INTO dbo.EmotionSection "
+                  "(id, title, section, subsection, news_desk, img_url, face_rectangle, sadness, neutral, contempt, disgust, anger, surprise, fear, happiness)"
+                  "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+
+    Values = [1, "test", "test", "test", "test", "test", "test", 0, 0, 0, 0, 0, 0, 0, 0]
+    cursor.execute(SQLCommand, Values)
+
+    #Commit the change
+    connection.commit()
+    #Close the sql server connection
+    connection.close()
+
 
 if __name__ == '__main__':
-    payload = {
-    'fq': "section_name:(\"Technology\")",
-    'begin_date': "20160101",
-    'end_date': "20160131"
-            }
-
-    t = get_articles(payload)
-    print(t[0].biggest_image_url)
-    print(t[1].biggest_image_url)
-    print(t[2].biggest_image_url)
-    print(t[3].biggest_image_url)
-    print(t[4].biggest_image_url)
-
-    search_range = '2016/1'
-    t = get_archive(payload, search_range)
-    response = t['response']
-    docs = response['docs']
-    print len(docs)
-
+    insert_sql_database()
