@@ -33,6 +33,9 @@ if __name__ == '__main__':
             result = Result(an_article, emotion_json)
             result_list.append(result)
 
+        if i % 50 == 0:
+            save_to_pickle(result_list)
+
 
         
     save_to_pickle(result_list)
