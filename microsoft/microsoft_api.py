@@ -63,6 +63,13 @@ if __name__ == '__main__':
     t = get_face(payload)
     print(t)
 
+    # No face
+    payload = {'url': 'https://lh3.googleusercontent.com/-4LORSEgp28U/AAAAAAAAAAI/AAAAAAAAErY/W4Ug6i3Vc64/s0-c-k-no-ns/photo.jpg'}
+    t = get_emotion(payload)
+    print(t)
+
+    t = get_face(payload)
+    print(t)
 
 
 
